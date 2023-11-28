@@ -1,0 +1,31 @@
+---
+
+baseURL: "https://blog.lammert.ink"
+languageCode: "en-us"
+title: "Xander's Personal Blog"
+
+theme: "PaperMod"
+paginate: 5
+
+enableRobotsTXT: true
+buildDrafts: false
+buildFuture: false
+buildExpired: false
+
+enableInlineShortcodes: true
+enableEmoji: true
+
+minify:
+  disableXML: true
+  minifyOutput: true
+
+# Read: https://github.com/adityatelange/hugo-PaperMod/wiki/FAQs#using-hugos-syntax-highlighter-chroma
+pygmentsUseClasses: true
+markup:
+  highlight:
+    noClasses: false
+    # anchorLineNos: true
+    # codeFences: true
+    # guessSyntax: true
+    # lineNos: true
+    # style: monokai
