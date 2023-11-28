@@ -21,7 +21,7 @@ jobs:
     steps:
       # Install hugo from APT repository
       - name: Install hugo
-        run: apt install hugo
+        run: sudo apt install hugo
     
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Checkout
