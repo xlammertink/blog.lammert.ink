@@ -1,0 +1,68 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Build and deploy to pages branch
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push events on the "main" branch
+  push:
+    branches: [ "main" ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    steps:
+      # Install hugo from APT repository
+      - name: Install hugo
+        run: apt install hugo
+    
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          submodules: recursive
+          fetch-depth: 1
+
+      # Setup pages
+      - name: Setup pages
+        uses: actions/configure-pages@v3
+        id: pages
+
+      # Build website with Hugo
+      - name: Build site
+        run: |
+          hugo --gc \
+               --minify \
+               --baseURL "${{ steps.pages.outputs.base_url }}/"
+        env:
+          HUGO_ENVIRONMENT: "production"
+          HUGO_ENV: "production"
+
+      # Upload the public folder to another branch
+      - name: Upload public folder
+        uses: actions/upload-pages-artifact@v2
+        with:
+          path: ./public
+
+  deploy:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Depend on the build step before deploying to Github Pages
+    needs: build
+
+    environment:
+      name: github-pages
+      url: ${{ steps.pages.outputs.base_url }}
+
+    steps:
+      # Deploy github-pages branch to Github Pages
+      - name: Deploy to Github Pages
+        uses: actions/deploy-pages@v2
