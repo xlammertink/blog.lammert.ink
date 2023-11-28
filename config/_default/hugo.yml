@@ -29,3 +29,7 @@ markup:
     # guessSyntax: true
     # lineNos: true
     # style: monokai
+
+outputFormats:
+  html:
+    mediaType: "text/html"
